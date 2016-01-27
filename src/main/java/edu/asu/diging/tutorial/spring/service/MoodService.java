@@ -1,36 +1,52 @@
 package edu.asu.diging.tutorial.spring.service;
-import java.util.*;
-import org.springframework.stereotype.Service;
-import edu.asu.diging.tutorial.spring.domain.Mood;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 import javax.annotation.PostConstruct;
- 
+
+import org.springframework.stereotype.Service;
+
+import edu.asu.diging.tutorial.spring.domain.Mood;
+
 @Service
 public class MoodService implements IMoodService {
-	public List<String> moods = new ArrayList<String>();
-	public Map<String,String> moodReason = new HashMap<String,String>();
+	
+	private List<String> moods;
+	private Random random;
+	private List<String> explanations;
 	
 	@PostConstruct
 	public void init() {
-		String [] moodList = {"Happy","Sad","Miserable","Excited"};
-		for (int i = 0; i < moodList.length; i++) {
-	        moods.add(moodList[i]);	        
-	    }
-		// Adding hashmap for reasons behind the mood
-		moodReason.put("Happy","weekend is here.!!");
-		moodReason.put("Sad","its monday Again..!");
-		moodReason.put("Miserable","I never get to see snow..!");
-		moodReason.put("Excited","I'm gonna work on a new project..! Yay!");
+		moods = new ArrayList<String>();
+		moods.add("happy");
+		moods.add("sad");
+		moods.add("bubbly");
+		moods.add("frustrated");
+		moods.add("scared");
+		moods.add("excited");
+		
+		explanations = new ArrayList<String>();
+		explanations.add("I am hungry.");
+		explanations.add("there were no mice.");
+		explanations.add("there were mice.");
+		explanations.add("I am purring.");
+		explanations.add("life is not a pony farm.");
+		
+		random = new Random(); 
 	}
-	
+
+	/* (non-Javadoc)
+	 * @see edu.asu.diging.tutorial.spring.one.service.IMoodService#getCurrentMood()
+	 */
 	public Mood getCurrentMood() {
-		// Randomly generates the mood and sets the reason to a Mood object.
-		Random randomGenerator = new Random();
-	    String currentMood = String.valueOf(moods.get(randomGenerator.nextInt(moods.size())));
-        return new Mood(currentMood);
+		int randomInt = random.nextInt(moods.size());
+		return new Mood(moods.get(randomInt));
     }
 	
-	public Mood getCurrentMoodReason(String currentMood) {
-		// Returns mood object for the given currentMood along with its reason.
-        return new Mood(currentMood,String.valueOf(moodReason.get(currentMood)));
-    }
+	public String getExplanation() {
+		int randomInt = random.nextInt(explanations.size());
+		return explanations.get(randomInt);
+	}
 }

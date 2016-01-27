@@ -6,6 +6,6 @@ public interface IMoodService {
 
 	public abstract Mood getCurrentMood();
 
-	public abstract Mood getCurrentMoodReason(String currentMood);
+	public abstract String getExplanation();
 
 }
