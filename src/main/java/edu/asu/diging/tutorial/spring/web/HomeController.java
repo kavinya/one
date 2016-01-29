@@ -18,4 +18,6 @@ public class HomeController {
 	    map.addAttribute("mood", service.getCurrentMood());
 	    return "home";
 	}
+
+
 }
